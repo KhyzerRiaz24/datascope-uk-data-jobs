@@ -129,9 +129,10 @@ collection stays disabled until you add repository secrets and set
 artifacts. Those artifacts expire after 30 days: keep independent backups.
 It does **not** automatically publish an updated website.
 
-The `web/` folder is a complete static site. It can be served locally or hosted
-using the Sites manifest in `.openai/hosting.json`. Publishing serves only that
-folder; the Python pipeline runs locally or in GitHub Actions. Never put keys,
+The `web/` folder is a complete static site. It can be served locally. Run
+`python3 scripts/package_web.py` to copy it into the supported `dist/` hosting
+directory declared in `.openai/hosting.json`. Publishing serves only that
+copy; the Python pipeline runs locally or in GitHub Actions. Never put keys,
 private source data or personal information in `web/`, because its files are
 downloadable by anyone with access to the deployed dashboard.
 

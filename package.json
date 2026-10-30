@@ -7,7 +7,8 @@
     "start": "python3 -m http.server 8765 --bind 127.0.0.1 --directory web",
     "test": "node --test tests/analytics.test.js",
     "check": "node --check web/app.js && node --check web/analytics.js",
-    "test:browser": "playwright test"
+    "test:browser": "playwright test",
+    "build": "python3 scripts/package_web.py"
   },
   "engines": {
     "node": ">=22.12"
