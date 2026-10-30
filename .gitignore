@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+.env.*
+!.env.example
+data/*.duckdb*
+data/live*
+data/raw/
+*.egg-info/
+.DS_Store
+node_modules/
+test-results/

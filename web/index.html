@@ -1,0 +1,34 @@
+<!doctype html>
+<!-- Application shell. app.js loads page modules into #page; all pages share
+     the same filters and dataset. See pages/guide.js for the project map. -->
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore UK data careers through transparent job, skill and salary analysis. An original Python and SQL portfolio project.">
+  <meta name="theme-color" content="#142c42">
+  <title>DataScope · UK Data Jobs Intelligence</title>
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to analysis</a>
+  <aside class="sidebar" aria-label="Application navigation">
+    <a class="brand" href="#overview"><span class="brand-mark" aria-hidden="true">d<span>↗</span></span><span>DataScope<small>UK DATA INTELLIGENCE</small></span></a>
+    <div class="nav-label">WORKSPACE</div>
+    <nav id="nav" aria-label="Pages"></nav>
+    <div class="sidebar-bottom"><span class="small-dot"></span><span>Built with Python + SQL<small>Designed for better questions.</small></span></div>
+  </aside>
+  <div class="workspace">
+    <header class="topbar"><div><span class="muted">Workspace</span><span class="slash">/</span><span id="breadcrumb">Market overview</span></div><a class="guide-link" href="#guide">Project guide <span aria-hidden="true">↗</span></a></header>
+    <main id="main" tabindex="-1">
+      <div id="dataset-banner" role="status"></div>
+      <section id="filters" aria-label="Shared analysis filters"></section>
+      <div id="page" aria-live="polite"><p class="loading">Opening your data workspace…</p></div>
+    </main>
+    <footer><span>DATASCOPE <span class="footer-line">/</span> A UK data careers portfolio project</span><a href="#guide">Definitions, sources & limitations</a></footer>
+  </div>
+  <noscript>This dashboard needs JavaScript to filter its dataset. Read docs/WALKTHROUGH.md in the source project for an accessible written guide.</noscript>
+</body>
+</html>

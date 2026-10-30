@@ -1,0 +1,19 @@
+{
+  "name": "datascope-dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "python3 -m http.server 8765 --bind 127.0.0.1 --directory web",
+    "test": "node --test tests/analytics.test.js",
+    "check": "node --check web/app.js && node --check web/analytics.js",
+    "test:browser": "playwright test"
+  },
+  "engines": {
+    "node": ">=22.12"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
+    "@playwright/test": "^1.64.1"
+  }
+}

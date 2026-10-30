@@ -1,0 +1,20 @@
+/** PAGE 5: data quality. Shows actual run metadata from Python alongside quality
+ * checks on the filtered snapshot. A successful pipeline is not full market coverage.
+ * Links to guide.js definitions and keeps synthetic-data provenance visible.
+ */
+import {salaryRows} from '../analytics.js';
+import {heading,metric,panel,e,number,percent,dateLabel} from '../ui.js';
+export function render({dataset,rows,filters}) {
+  const runs=dataset.runs.filter(r=>r.observed_at<=filters.date).slice(-8).reverse();
+  const selectedRun=dataset.runs.filter(r=>r.observed_at===filters.date).at(-1);
+  const latestRunDate=dataset.runs.filter(r=>r.observed_at<=filters.date).at(-1)?.observed_at;
+  const failed=selectedRun?.rejected_rows||0;
+  const missing=rows.filter(r=>r.working==='Unspecified').length;
+  const checks=[['Dataset provenance',dataset.mode==='demo'?'Synthetic demonstration':dataset.mode==='imported'?'User-imported CSV':'Adzuna UK API',dataset.mode==='demo'?'Every figure is illustrative. No live collection is being claimed.':'The dashboard describes this collected sample only.'],['Salary eligibility',`${salaryRows(rows).length} of ${rows.length} adverts`,'Complete, disclosed annual GBP ranges for permanent roles only.'],['Working arrangement coverage',percent(rows.length-missing,rows.length),'Unknown descriptions remain unspecified; hybrid is separate from remote.'],['Seniority coverage',percent(rows.filter(r=>r.seniority!=='Unspecified').length,rows.length),'Titles without an explicit level remain unspecified.'],['Row validation',`${failed} rejected in selected run`,'Missing titles, invalid dates, non-finite salaries and reversed ranges are rejected.'],['Deduplication','One record per provider ID per day','Without an ID, the fingerprint uses source + title + employer + location + posting date. Cross-provider duplicates are not resolved.']];
+  return heading('TRUST & TRANSPARENCY','Know what is behind the numbers.','Inspect the source, coverage and processing history before drawing conclusions.')+
+    `<div class="metrics three">${metric('Snapshot date',dateLabel(filters.date),'Filters refer to this observation date',true)}${metric('Stored observations',number(dataset.observations.length),'Historical records, not unique current vacancies')}${metric('Pipeline runs recorded',number(dataset.runs.length),`Latest recorded run: ${dateLabel(latestRunDate)}`)}</div>
+    ${panel('Data checks','Checks describe the selected snapshot; run logs below describe complete imports.',`<div class="quality-list">${checks.map(([name,value,desc])=>`<div><div><h3>${e(name)}</h3><p>${e(desc)}</p></div><span class="quality-value">${e(value)}</span></div>`).join('')}</div>`)}
+    ${selectedRun?.details.coverage?panel('Collection coverage','Counts overlap across searches; reported matches must not be added as distinct jobs.',`<div class="table-scroll"><table><thead><tr><th>Query</th><th>Provider matches</th><th>Fetched records</th><th>Coverage</th></tr></thead><tbody>${selectedRun.details.coverage.map(c=>`<tr><td>${e(c.query)}</td><td>${number(c.reported_matches)}</td><td>${number(c.fetched)}</td><td>${c.capped?'Capped sample':'Fetched up to reported count'}</td></tr>`).join('')}</tbody></table></div>`):''}
+    ${panel('Recent pipeline runs','Latest eight runs up to the selected observation date · counts before dashboard filters',`<div class="table-scroll"><table><thead><tr><th scope="col">Observation date</th><th scope="col">Input rows</th><th scope="col">Stored jobs</th><th scope="col">Duplicates removed</th><th scope="col">Out of scope</th><th scope="col">Rejected</th></tr></thead><tbody>${runs.map(r=>`<tr><td>${e(dateLabel(r.observed_at))}</td><td>${number(r.input_rows)}</td><td>${number(r.accepted_rows)}</td><td>${number(r.duplicate_rows)}</td><td>${number(r.filtered_rows)}</td><td>${number(r.rejected_rows)}</td></tr>`).join('')}</tbody></table></div>`)}
+    <p class="footnote">A repeat run can appear in the log while leaving one job/day observation in storage. Failed API collection stops before database writes and does not replace the previous export. <a href="#guide">Read the methodology →</a></p>`;
+}

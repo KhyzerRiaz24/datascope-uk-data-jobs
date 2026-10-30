@@ -1,0 +1,32 @@
+name: Project checks
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: python -m pip install -r requirements.txt
+      - name: Test pipeline and provider failure paths
+        run: PYTHONPATH=src python -m unittest discover -s tests -v
+      - name: Test dashboard calculations
+        run: npm test
+      - name: Check browser JavaScript syntax
+        run: npm run check
+      - name: Install browser test dependencies
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+      - name: Check browser behaviour and accessibility
+        run: npm run test:browser
+      - name: Rebuild demo and execute SQL reports
+        run: |
+          PYTHONPATH=src python -m ukjobs.cli demo --output /tmp/datascope-demo.json
+          python scripts/query.py --db data/demo.duckdb

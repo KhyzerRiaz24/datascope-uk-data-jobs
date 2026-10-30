@@ -1,0 +1,42 @@
+# Optional real-data collector. Add your own Adzuna repository secrets first.
+# Daily execution is OFF until ENABLE_DAILY_REFRESH is set to true in repo variables.
+# This workflow saves downloadable data artifacts, not an automatic Sites deployment.
+name: Refresh job data
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 8 * * *'
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: datascope-data-refresh
+  cancel-in-progress: false
+jobs:
+  collect:
+    if: github.event_name == 'workflow_dispatch' || vars.ENABLE_DAILY_REFRESH == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python -m pip install -r requirements.txt
+      - name: Restore previous successful data history
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/restore_history.py
+      - name: Collect, validate and export
+        env:
+          ADZUNA_APP_ID: ${{ secrets.ADZUNA_APP_ID }}
+          ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
+        run: PYTHONPATH=src python -m ukjobs.cli fetch --pages 3
+      - name: Save database and dashboard dataset
+        uses: actions/upload-artifact@v4
+        with:
+          name: datascope-history
+          path: |
+            data/live.duckdb
+            web/data.json
+          retention-days: 30
+          if-no-files-found: error

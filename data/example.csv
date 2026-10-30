@@ -1,0 +1,4 @@
+id,title,company,location,description,posted_at,salary_min,salary_max,salary_unit,contract_type,currency,salary_is_predicted,url
+example-1,Junior Data Analyst,Fictional Example A,Leeds,SQL Excel Power BI. Hybrid working.,2026-10-20,28000,34000,annual,permanent,GBP,0,
+example-2,Graduate Data Scientist,Fictional Example B,Manchester,Python SQL statistics and machine learning. On-site.,2026-10-21,32000,40000,annual,permanent,GBP,0,
+example-3,Senior Data Engineer,Fictional Example C,London,Python SQL dbt AWS Airflow. Fully remote.,2026-10-22,450,600,daily,contract,GBP,0,

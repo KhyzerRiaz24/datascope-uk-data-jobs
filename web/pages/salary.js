@@ -1,0 +1,12 @@
+/** PAGE 4: salaries. Uses salaryRows() to exclude contracts, predicted pay, missing
+ * bounds, non-GBP and unknown units. Quartiles describe advertised range MIDPOINTS,
+ * not actual employee earnings. Group comparisons are descriptive, not causal.
+ */
+import {salaryRows,salaryGroups,median,quantile} from '../analytics.js';
+import {heading,metric,panel,e,money,percent,empty,number} from '../ui.js';
+export function render({rows}) {
+  const paid=salaryRows(rows),values=paid.map(r=>r.salary_mid);
+  const table=key=>`<div class="table-scroll"><table><thead><tr><th scope="col">${key==='role'?'Role family':'Seniority in title'}</th><th scope="col">Median midpoint</th><th scope="col">Middle 50% of midpoints</th><th scope="col">Sample</th></tr></thead><tbody>${salaryGroups(rows,key).map(g=>`<tr><td><strong>${e(g.name)}</strong></td><td>${money(g.median)}</td><td>${money(g.q1)}–${money(g.q3)}</td><td>${number(g.count)}${g.count<10?' <span class="pill pill-amber">Small sample</span>':''}</td></tr>`).join('')}</tbody></table></div>`;
+  return heading('SALARY INTELLIGENCE','Compare like with like.','Disclosed annual GBP salary ranges for permanent roles, with estimated salaries excluded.')+
+    (!rows.length?empty():!paid.length?empty('No comparable salary ranges in this selection.','Salary comparisons need permanent jobs with both annual GBP bounds disclosed and no predicted salary.'):`<div class="metrics">${metric('Median salary midpoint',money(median(values)),'Median of each advert’s (minimum + maximum) ÷ 2',true)}${metric('Salary coverage',percent(paid.length,rows.length),`${paid.length} of ${rows.length} filtered adverts qualify`)}${metric('25th percentile',money(quantile(values,.25)),'A quarter of comparable midpoints are below this')}${metric('75th percentile',money(quantile(values,.75)),'A quarter of comparable midpoints are above this')}</div>${panel('Salary by role family','Annual GBP · advertised midpoints · change seniority and location filters for fairer comparisons',table('role'))}${panel('Salary by seniority','Title-based classification · unspecified does not mean mid level',table('seniority'))}<aside class="note-panel"><h2>These are advertised ranges, not measured salaries.</h2><p>Missing pay is unlikely to be random. Regional and seniority mix can explain differences between groups. Small groups are flagged; these observations do not establish that learning a skill causes higher pay.</p></aside>`);
+}
