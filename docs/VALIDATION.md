@@ -20,6 +20,12 @@ The tests are retained in `tests/` and the continuous-integration workflow runs
 them. These checks reduce errors; they do not guarantee that all possible inputs,
 devices or accessibility needs are covered.
 
+The publication preparation also checked local documentation/image references,
+captured five fresh screenshots, parsed both workflow files, verified the static
+hosting package, and reran all 22 Python/JavaScript tests. The dashboard's browser
+source was unchanged in that preparation. The opt-in GitHub Pages job has not
+been run against a newly published GitHub repository.
+
 ## Limits of verification
 
 The Adzuna adapter was tested with controlled responses. Live credentials,

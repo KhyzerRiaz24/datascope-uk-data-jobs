@@ -2,9 +2,13 @@ name: Project checks
 on: [push, pull_request, workflow_dispatch]
 permissions:
   contents: read
+concurrency:
+  group: datascope-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -30,3 +34,34 @@ jobs:
         run: |
           PYTHONPATH=src python -m ukjobs.cli demo --output /tmp/datascope-demo.json
           python scripts/query.py --db data/demo.duckdb
+      - name: Prepare and check the publication files
+        run: |
+          python scripts/check_release.py
+          python scripts/package_web.py
+  deploy:
+    # Opt-in keeps checks useful before Pages has been configured in the new repo.
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && vars.ENABLE_GITHUB_PAGES == 'true'
+    needs: test
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python scripts/package_web.py
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist
+          retention-days: 1
+      - name: Publish the checked static demo
+        id: deployment
+        uses: actions/deploy-pages@v4

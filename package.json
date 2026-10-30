@@ -8,7 +8,9 @@
     "test": "node --test tests/analytics.test.js",
     "check": "node --check web/app.js && node --check web/analytics.js",
     "test:browser": "playwright test",
-    "build": "python3 scripts/package_web.py"
+    "build": "python3 scripts/package_web.py",
+    "screenshots": "node scripts/capture_portfolio.mjs",
+    "check:release": "python3 scripts/check_release.py"
   },
   "engines": {
     "node": ">=22.12"

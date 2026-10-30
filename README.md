@@ -1,12 +1,30 @@
 # DataScope — UK Data Jobs Intelligence
 
-An original portfolio project for data roles: a Python ingestion pipeline, a
-DuckDB history store, inspectable SQL reports and a six-page browser dashboard.
+A data analytics portfolio project by **Khyzer Riaz**: collect job adverts, clean
+and organise them with Python and SQL, then explore roles, skill requirements,
+advertised salaries and working arrangements in a six-page dashboard.
+
+**[Simple project explanation](docs/PROJECT_EXPLAINED.md)** ·
+**[Follow the code](docs/WALKTHROUGH.md)** ·
+**[Metric definitions](docs/METHODOLOGY.md)** ·
+**[Checks completed](docs/VALIDATION.md)**
+
+![DataScope market overview, clearly labelled as a synthetic demonstration](docs/images/overview-desktop.png)
 
 **The shipped dashboard uses synthetic demonstration data.** It is functional,
 but its figures are not real UK job-market findings. Every page keeps that
 distinction visible. Import your own permitted CSV data or configure the optional
 Adzuna adapter to analyse a real sample. Live collection needs your own credentials.
+
+## The question behind the project
+
+Someone preparing for a data career might ask: which roles can I target, which
+skills appear together, and what salary ranges are advertised for comparable
+jobs? DataScope provides a repeatable way to explore those questions in a collected
+dataset, while making the dataset's source and limitations visible.
+
+The current demonstration shows the complete workflow, not empirical answers
+about today's UK job market. No trained AI model or live collection is claimed.
 
 ## Start here
 
@@ -40,6 +58,25 @@ needed: the last command serves the already generated `web/data.json`.
 
 All pages share role, seniority, location, working-style and observation-date
 filters. Source comments at the start of every page explain its purpose and links.
+
+![Skill mentions and co-occurring skill pairs in the demonstration dataset](docs/images/skills-desktop.png)
+
+![Salary comparisons showing coverage, midpoints and sample sizes](docs/images/salary-desktop.png)
+
+## The data journey
+
+```mermaid
+flowchart LR
+  Source[CSV / optional Adzuna API] --> Clean[Python validation and classification]
+  Clean --> DB[(DuckDB daily snapshots)]
+  DB --> SQL[SQL analysis]
+  DB --> Export[Read-only JSON export]
+  Export --> Dashboard[Filtered browser dashboard]
+```
+
+Python prepares and stores the data. The browser reads the exported file and
+recalculates views when filters change. It does not run Python or contact Adzuna.
+This keeps the public demonstration independent of a running backend service.
 
 ## Follow the code
 
@@ -129,6 +166,12 @@ collection stays disabled until you add repository secrets and set
 artifacts. Those artifacts expire after 30 days: keep independent backups.
 It does **not** automatically publish an updated website.
 
+For a public recruiter-facing demo, the checks workflow also includes an opt-in
+GitHub Pages deployment that runs only after checks pass on `main`. It stays off
+until Pages is configured and `ENABLE_GITHUB_PAGES=true` is set. Follow the
+[GitHub publishing guide](docs/GITHUB_PUBLISHING.md); a workflow file alone does
+not mean that a GitHub repository or public website has already been published.
+
 The `web/` folder is a complete static site. It can be served locally. Run
 `python3 scripts/package_web.py` to copy it into the supported `dist/` hosting
 directory declared in `.openai/hosting.json`. Publishing serves only that
@@ -144,6 +187,10 @@ does not claim a trained AI model, causal findings, hiring outcomes or whole-mar
 coverage. Before putting impact numbers on your CV, collect permitted real data,
 run your own analysis and report only results you can reproduce and explain.
 
+For a copy-ready LinkedIn draft, project entry and screenshot order, see
+[LinkedIn material](docs/LINKEDIN.md). For a short demonstration, CV wording and
+interview questions, see [portfolio notes](docs/PORTFOLIO.md).
+
 ## Credits and licence
 
 Inspired by [Job Market Pulse](https://github.com/evgeniimatveev/job-market-pulse),
@@ -151,6 +198,9 @@ listed as project #211 in
 [this AI/ML project directory](https://github.com/darkdevil3610/100-AI-Machine-learning-Deep-learning-Computer-vision-NLP).
 The implementation, comments, documentation and synthetic dataset were written
 independently. No upstream application code or credentials were copied.
+
+Development used AI assistance. The documentation, explicit rules and retained
+tests make the implementation available to inspect, reproduce and explain.
 
 Code in this project is MIT licensed; see `LICENSE`. Source datasets and external
 APIs retain their own access and reuse conditions. Adzuna's official contract is
