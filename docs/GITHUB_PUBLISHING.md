@@ -49,6 +49,9 @@ Do not upload your complete working folder with `.venv/` or `node_modules/`.
 
 Create an empty GitHub repository first. From the local project folder, use:
 
+The prepared working copy already has a local commit containing this material.
+If `git status` is clean, skip the `git add` and `git commit` commands below.
+
 ```sh
 git status
 git add README.md docs scripts package.json .github/workflows/checks.yml
