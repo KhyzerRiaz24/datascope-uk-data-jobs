@@ -34,14 +34,17 @@ be inspected and reproduced.
 I'm looking for opportunities in data analytics and would welcome feedback on
 the project and the decisions behind it.
 
+Explore the code: https://github.com/KhyzerRiaz24/datascope-uk-data-jobs
+
 #DataAnalytics #Python #SQL #DataEngineering #PortfolioProject
 
-## Add links only after publication
+## Project links
 
-Add the verified public GitHub repository and public demo URL to the end of the
-post. The existing Sites preview is private, so do not present it as a public
-recruiter link. Proposed addresses are in GITHUB_PUBLISHING.md and are not proof
-that publication has happened.
+The public source repository is
+https://github.com/KhyzerRiaz24/datascope-uk-data-jobs. The post includes this link.
+The existing Sites preview is private. Add a public demo link only after an
+actual GitHub Pages deployment has been verified; do not use the private preview
+as a public recruiter link.
 
 ## LinkedIn Projects entry
 
@@ -57,7 +60,7 @@ documentation explaining the implementation and analytical limits. The current
 demonstration uses synthetic data; real-data import and optional API collection
 are supported.
 
-**Project URL:** use the actual public demo or GitHub URL after verifying it.
+**Project URL:** https://github.com/KhyzerRiaz24/datascope-uk-data-jobs
 
 **Skills to associate:** Python, SQL, DuckDB, Data Cleaning, Data Analysis,
 Data Visualisation, ETL, JavaScript, Automated Testing, GitHub Actions.

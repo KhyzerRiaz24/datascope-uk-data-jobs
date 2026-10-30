@@ -1,5 +1,7 @@
 # DataScope — UK Data Jobs Intelligence
 
+[![Project checks](https://github.com/KhyzerRiaz24/datascope-uk-data-jobs/actions/workflows/checks.yml/badge.svg)](https://github.com/KhyzerRiaz24/datascope-uk-data-jobs/actions/workflows/checks.yml)
+
 A data analytics portfolio project by **Khyzer Riaz**: collect job adverts, clean
 and organise them with Python and SQL, then explore roles, skill requirements,
 advertised salaries and working arrangements in a six-page dashboard.
@@ -8,6 +10,9 @@ advertised salaries and working arrangements in a six-page dashboard.
 **[Follow the code](docs/WALKTHROUGH.md)** ·
 **[Metric definitions](docs/METHODOLOGY.md)** ·
 **[Checks completed](docs/VALIDATION.md)**
+
+[Source repository](https://github.com/KhyzerRiaz24/datascope-uk-data-jobs) ·
+[Automated checks](https://github.com/KhyzerRiaz24/datascope-uk-data-jobs/actions/workflows/checks.yml)
 
 ![DataScope market overview, clearly labelled as a synthetic demonstration](docs/images/overview-desktop.png)
 

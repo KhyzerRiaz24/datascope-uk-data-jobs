@@ -1,5 +1,14 @@
 # GitHub publishing pack
 
+## Repository for this project
+
+The dedicated public repository was created on 30 October 2026:
+https://github.com/KhyzerRiaz24/datascope-uk-data-jobs
+
+The local Git remote is named `github`. The original private Sites preview
+keeps its existing access settings. GitHub Pages remains opt-in; the source
+repository is separate from a public demo deployment.
+
 ## Repository details to copy
 
 **Suggested repository name:** `datascope-uk-data-jobs`
@@ -17,17 +26,19 @@ checks, and a dashboard for roles, skills and advertised salary ranges. Syntheti
 `data-visualization` `javascript` `github-actions` `portfolio-project`
 `job-market-analysis`
 
-The name and addresses below are proposed publication targets. This preparation
-does not create a GitHub repository, upload code or change the private Sites demo.
-Only describe the links as live after GitHub confirms publication.
+The source repository below exists. The expected Pages address is a future
+deployment target and must not be described as live before Pages confirms it.
 
-- Expected repository: https://github.com/KhyzerRiaz24/datascope-uk-data-jobs
+- Repository: https://github.com/KhyzerRiaz24/datascope-uk-data-jobs
 - Expected Pages demo: https://khyzerriaz24.github.io/datascope-uk-data-jobs/
 - Current private owner preview: https://uk-data-jobs-khyzer.perkyyak20.chatgpt.site
 
 Do not use the private owner-preview link as a public recruiter demo.
 
 ## Option A: upload the prepared source ZIP through GitHub
+
+The repository above is already created. These creation steps are retained as
+a reference for making a separate copy; do not recreate the existing repository.
 
 1. Unzip the source download. Open the inner `uk-data-jobs` folder.
 2. Create a new GitHub repository using the suggested name. Choose Public if
@@ -47,7 +58,12 @@ Do not upload your complete working folder with `.venv/` or `node_modules/`.
 
 ## Option B: use the existing local Git project
 
-Create an empty GitHub repository first. From the local project folder, use:
+The local project is already connected to the repository above. To save later
+changes there, review the changed files, commit them and run
+`git push github main`. The commands below describe initial setup for a separate
+copy whose GitHub repository does not already exist.
+
+For that separate copy, create an empty GitHub repository first, then use:
 
 The prepared working copy already has a local commit containing this material.
 If `git status` is clean, skip the `git add` and `git commit` commands below.
